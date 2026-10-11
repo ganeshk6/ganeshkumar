@@ -1,6 +1,4 @@
-"use client";
-
-import { FormEvent, useState } from "react";
+import { useState, type FormEvent } from "react";
 import { AlertCircle, ArrowUpRight, CheckCircle2, Loader2, Mail, MapPin, Phone, Send } from "lucide-react";
 import { FaLinkedinIn } from "react-icons/fa";
 import { SiGithub } from "react-icons/si";
