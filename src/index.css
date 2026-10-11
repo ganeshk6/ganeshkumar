@@ -1,0 +1,43 @@
+@import "tailwindcss";
+:root {
+  --font-code: "JetBrains Mono", "JetBrains Mono Fallback", monospace;
+  --font-heading: "Space Grotesk", "Space Grotesk Fallback", sans-serif
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #020617;
+  font-family: Inter, "Inter Fallback", Inter, sans-serif;
+}
+
+.font-code{
+  font-family: var(--font-code);
+}
+
+.font-heading {
+    font-family: var(--font-heading);
+}
+.gradient-text {
+    background-image: linear-gradient(to right, #60a5fa, #8b5cf6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes border-spin {
+  to {
+    --angle: 360deg;
+  }
+}
