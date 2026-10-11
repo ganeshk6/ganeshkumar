@@ -1,19 +1,21 @@
 import { ArrowRight, ArrowUp, Mail } from "lucide-react";
 import { FaLinkedinIn } from "react-icons/fa";
 import { SiGithub, SiLeetcode } from "react-icons/si";
+import { handleNavClick, scrollToSection } from "../utils/scrollToSection";
 
 // ---- Apni details yahan badlo ----
 const NAME = "Ganesh Kumar";
-const EMAIL = "ganesh620671@email.com";
+const EMAIL = "ganesh620671@gmail.com";
 const GITHUB = "https://github.com/ganeshk6";
 const LINKEDIN = "https://www.linkedin.com/in/ganesh-kumar-47988621b/";
 const LEETCODE = "https://leetcode.com/u/ganesh62/";
 
+// id = section ki id (Header ke navLinks jaisi)
 const navLinks = [
-    { label: "Home", href: "#home" },
-    { label: "About", href: "#about" },
-    { label: "Work", href: "#work" },
-    { label: "Contact", href: "#contact" },
+    { label: "Home", id: "home" },
+    { label: "About", id: "about" },
+    { label: "Work", id: "work" },
+    { label: "Contact", id: "contact" },
 ];
 // -----------------------------------
 
@@ -51,6 +53,7 @@ export default function Footer() {
 
                     <a
                         href="#contact"
+                        onClick={(e) => handleNavClick(e, "contact")}
                         className="group inline-flex shrink-0 items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_8px_30px_-8px_rgba(99,102,241,0.7)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_40px_-8px_rgba(99,102,241,0.95)]"
                     >
                         Get In Touch
@@ -62,7 +65,11 @@ export default function Footer() {
                 <div className="border-t border-white/[0.06] py-6">
                     <div className="flex flex-col items-center gap-6 md:flex-row md:justify-between">
                         {/* Logo */}
-                        <a href="#home" className="group flex items-center gap-3">
+                        <a
+                            href="#home"
+                            onClick={(e) => handleNavClick(e, "home")}
+                            className="group flex items-center gap-3"
+                        >
                             <span className="flex h-9 w-9 items-center justify-center rounded-4xl bg-gradient-to-br from-blue-600 to-violet-600 text-xs font-bold text-white shadow-[0_0_20px_-4px_rgba(99,102,241,0.8)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
                                 {initials}
                             </span>
@@ -73,8 +80,9 @@ export default function Footer() {
                         <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
                             {navLinks.map((l) => (
                                 <a
-                                    key={l.label}
-                                    href={l.href}
+                                    key={l.id}
+                                    href={`#${l.id}`}
+                                    onClick={(e) => handleNavClick(e, l.id)}
                                     className="relative text-xs text-zinc-500 transition-colors duration-300 after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-gradient-to-r after:from-blue-500 after:to-violet-500 after:transition-all after:duration-300 hover:text-white hover:after:w-full"
                                 >
                                     {l.label}
@@ -84,7 +92,7 @@ export default function Footer() {
 
                         {/* Socials */}
                         <div className="flex items-center gap-2">
-                            <a href={LEETCODE} target="_blank" rel="noreferrer" aria-label="GitHub" className={socialBtn}>
+                            <a href={LEETCODE} target="_blank" rel="noreferrer" aria-label="LeetCode" className={socialBtn}>
                                 <SiLeetcode size={14} />
                             </a>
                             <a href={GITHUB} target="_blank" rel="noreferrer" aria-label="GitHub" className={socialBtn}>
@@ -97,7 +105,8 @@ export default function Footer() {
                                 <Mail size={14} />
                             </a>
                             <button
-                                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                                type="button"
+                                onClick={() => scrollToSection("home")}
                                 aria-label="Back to top"
                                 className={socialBtn}
                             >
