@@ -23,6 +23,7 @@ import {
 } from "react-icons/si";
 import { VscVscode } from "react-icons/vsc";
 import { Cpu, Database, LayoutPanelLeft, Code2, Server, Users, Wrench } from "lucide-react";
+import Reveal from "./Reveal";
 
 type Skill = { name: string; icon?: IconType; color?: string };
 
@@ -130,57 +131,59 @@ export default function TechStack() {
         <>
             <section id="skills" className="mx-auto w-full max-w-7xl pt-27 px-4 md:px-6 xl:px-0">
                 {/* Heading */}
-                <div className="flex items-center gap-3 font-code text-xs">
-                    <span className="text-cyan-400">03</span>
-                    <span className="h-px w-8 bg-zinc-700" />
-                    <span className="uppercase tracking-[0.3em] text-zinc-500">Tech Stack</span>
-                </div>
-                <h2 className="mt-3 bg-gradient-to-r from-blue-600 via-sky-300 to-violet-600 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl">
-                    Tools I build with
-                </h2>
-                <p className="mt-5 max-w-[520px] text-[15px] leading-relaxed text-zinc-400">
-                    A working toolkit of {total}+ technologies across the stack — from languages and
-                    frameworks to databases, platforms, and the way I work.
-                </p>
-
+                <Reveal>
+                    <div className="flex items-center gap-3 font-code text-xs">
+                        <span className="text-cyan-400">03</span>
+                        <span className="h-px w-8 bg-zinc-700" />
+                        <span className="uppercase tracking-[0.3em] text-zinc-500">Tech Stack</span>
+                    </div>
+                    <h2 className="mt-3 bg-gradient-to-r from-blue-600 via-sky-300 to-violet-600 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl">
+                        Tools I build with
+                    </h2>
+                    <p className="mt-5 max-w-[520px] text-[15px] leading-relaxed text-zinc-400">
+                        A working toolkit of {total}+ technologies across the stack — from languages and
+                        frameworks to databases, platforms, and the way I work.
+                    </p>
+                </Reveal>
                 {/* Cards */}
                 <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-                    {categories.map(({ title, icon: Icon, gradient, skills }) => (
-                        <div
-                            key={title}
-                            className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0d0d12] p-5 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-blue-500/40 hover:shadow-[0_12px_30px_-12px_rgba(59,130,246,0.4)]"
-                        >
-                            {/* hover glow */}
-                            <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(20,184,166,0.12),transparent_60%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    {categories.map(({ title, icon: Icon, gradient, skills }, i) => (
+                        <Reveal key={title} delay={i * 80} className="h-full">
+                            <div
+                                className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0d0d12] p-5 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-blue-500/40 hover:shadow-[0_12px_30px_-12px_rgba(59,130,246,0.4)]"
+                            >
+                                {/* hover glow */}
+                                <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(20,184,166,0.12),transparent_60%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-                            <div className="relative flex items-center gap-3">
-                                <div
-                                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${gradient} text-white transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}
-                                >
-                                    <Icon size={18} />
-                                </div>
-                                <div>
-                                    <h3 className="text-[15px] font-semibold text-white">{title}</h3>
-                                    <p className="font-code text-[10px] text-zinc-500">{skills.length} skills</p>
-                                </div>
-                            </div>
-
-                            <div className="relative mt-5 flex flex-wrap gap-2">
-                                {skills.map(({ name, icon: SkillIcon, color }) => (
-                                    <span
-                                        key={name}
-                                        className="inline-flex items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.03] px-2.5 py-1.5 text-xs text-zinc-300 transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-400/40 hover:bg-blue-500/10 hover:text-white"
+                                <div className="relative flex items-center gap-3">
+                                    <div
+                                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${gradient} text-white transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}
                                     >
-                                        {SkillIcon ? (
-                                            <SkillIcon size={13} style={{ color }} />
-                                        ) : (
-                                            <span className="h-1.5 w-1.5 rounded-full bg-cyan-500" />
-                                        )}
-                                        {name}
-                                    </span>
-                                ))}
+                                        <Icon size={18} />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-[15px] font-semibold text-white">{title}</h3>
+                                        <p className="font-code text-[10px] text-zinc-500">{skills.length} skills</p>
+                                    </div>
+                                </div>
+
+                                <div className="relative mt-5 flex flex-wrap gap-2">
+                                    {skills.map(({ name, icon: SkillIcon, color }) => (
+                                        <span
+                                            key={name}
+                                            className="inline-flex items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.03] px-2.5 py-1.5 text-xs text-zinc-300 transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-400/40 hover:bg-blue-500/10 hover:text-white"
+                                        >
+                                            {SkillIcon ? (
+                                                <SkillIcon size={13} style={{ color }} />
+                                            ) : (
+                                                <span className="h-1.5 w-1.5 rounded-full bg-cyan-500" />
+                                            )}
+                                            {name}
+                                        </span>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
+                        </Reveal>
                     ))}
                 </div>
             </section>

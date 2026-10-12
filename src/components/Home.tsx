@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import rightArrow from "../assets/right-arrow.svg";
 import download from "../assets/download.svg";
 import leetcode from "../assets/leetcode.svg";
+import { scrollToSection } from "../utils/scrollToSection";
+const RESUME_URL = "/ganesh_updated_resume.pdf";
 
 export default function Home() {
     const developerRoles = [
@@ -74,16 +76,17 @@ export default function Home() {
                             and reliable software solutions.
                         </p>
                         <div className="mb-10 flex flex-wrap gap-4">
-                            <button className="
-                                flex shrink-0 items-center gap-2 rounded-xl
-                                bg-gradient-to-r from-blue-600 to-violet-600
-                                px-7 py-3.5 text-sm font-semibold text-white
-                                shadow-lg shadow-blue-600/20 transition-all
-                                duration-300 hover:-translate-y-0.5
-                                hover:shadow-blue-500/40">View my work
+                            <button onClick={() => scrollToSection("work")} 
+                                className="
+                                    flex shrink-0 items-center gap-2 rounded-xl
+                                    bg-gradient-to-r from-blue-600 to-violet-600
+                                    px-7 py-3.5 text-sm font-semibold text-white
+                                    shadow-lg shadow-blue-600/20 transition-all
+                                    duration-300 hover:-translate-y-0.5
+                                    hover:shadow-blue-500/40">View my work
                                 <img src={rightArrow} alt="work" className="h-6 w-6 object-contain brightness-0 invert" />
                             </button>
-                            <a className="justify-center inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-7 py-3.5 text-sm font-semibold text-white transition-all hover:border-white/20 hover:bg-white/[0.08]">
+                            <a href={RESUME_URL} download="ganesh_updated_resume.pdf" className="justify-center inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-7 py-3.5 text-sm font-semibold text-white transition-all hover:border-white/20 hover:bg-white/[0.08]">
                                 <img src={download} alt="Resume" className="h-6 w-6 object-contain brightness-0 invert" />
                                 Resume
                             </a>

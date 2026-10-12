@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { BookOpen, ExternalLink, GitFork, RefreshCw, Users } from "lucide-react";
 import { SiGithub } from "react-icons/si";
+import Reveal from "./Reveal";
 
 const GITHUB_USERNAME = "ganeshk6";
 const REPO_COUNT = 6;
@@ -150,64 +151,66 @@ export default function GitHubActivity() {
 
                 <div className="mt-12 grid gap-5 lg:grid-cols-[280px_1fr]">
                     {/* Profile card */}
-                    <aside className="group h-fit rounded-2xl border border-white/[0.08] bg-[#0d0d12] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/40 hover:shadow-[0_16px_40px_-16px_rgba(59,130,246,0.4)]">
-                        {loading && !user ? (
-                            <div className="animate-pulse">
-                                <div className="flex items-center gap-4">
-                                    <div className="h-14 w-14 rounded-full bg-white/[0.06]" />
-                                    <div className="space-y-2">
-                                        <div className="h-3 w-28 rounded bg-white/[0.06]" />
-                                        <div className="h-3 w-20 rounded bg-white/[0.04]" />
-                                    </div>
-                                </div>
-                                <div className="mt-6 h-12 rounded bg-white/[0.04]" />
-                            </div>
-                        ) : user ? (
-                            <>
-                                <div className="flex items-center gap-4">
-                                    <div className="relative shrink-0">
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img
-                                            src={user.avatar_url}
-                                            alt={user.name ?? user.login}
-                                            className="h-14 w-14 rounded-full border border-white/10 object-cover transition-transform duration-300 group-hover:scale-105"
-                                        />
-                                        <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border border-white/10 bg-[#0d0d12] text-white">
-                                            <SiGithub size={11} />
-                                        </span>
-                                    </div>
-                                    <div className="min-w-0">
-                                        <h3 className="truncate text-sm font-semibold text-white">{user.name ?? user.login}</h3>
-                                        <p className="truncate font-code text-xs text-zinc-500">@{user.login}</p>
-                                    </div>
-                                </div>
-
-                                <div className="mt-5 grid grid-cols-3 gap-2 border-t border-white/[0.06] pt-5 text-center">
-                                    {[
-                                        { v: user.public_repos, l: "Repos", i: BookOpen },
-                                        { v: user.followers, l: "Followers", i: Users },
-                                        { v: user.following, l: "Following", i: Users },
-                                    ].map(({ v, l, i: I }) => (
-                                        <div key={l}>
-                                            <div className="text-lg font-bold text-white">{v}</div>
-                                            <div className="mt-0.5 flex items-center justify-center gap-1 font-code text-[10px] text-zinc-500">
-                                                <I size={10} />
-                                                {l}
-                                            </div>
+                    <Reveal direction="right" className="h-fit">
+                        <aside className="group h-fit rounded-2xl border border-white/[0.08] bg-[#0d0d12] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/40 hover:shadow-[0_16px_40px_-16px_rgba(59,130,246,0.4)]">
+                            {loading && !user ? (
+                                <div className="animate-pulse">
+                                    <div className="flex items-center gap-4">
+                                        <div className="h-14 w-14 rounded-full bg-white/[0.06]" />
+                                        <div className="space-y-2">
+                                            <div className="h-3 w-28 rounded bg-white/[0.06]" />
+                                            <div className="h-3 w-20 rounded bg-white/[0.04]" />
                                         </div>
-                                    ))}
+                                    </div>
+                                    <div className="mt-6 h-12 rounded bg-white/[0.04]" />
                                 </div>
-                            </>
-                        ) : (
-                            <p className="text-sm text-zinc-500">Profile load nahi ho paya.</p>
-                        )}
-                    </aside>
+                            ) : user ? (
+                                <>
+                                    <div className="flex items-center gap-4">
+                                        <div className="relative shrink-0">
+                                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                                            <img
+                                                src={user.avatar_url}
+                                                alt={user.name ?? user.login}
+                                                className="h-14 w-14 rounded-full border border-white/10 object-cover transition-transform duration-300 group-hover:scale-105"
+                                            />
+                                            <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border border-white/10 bg-[#0d0d12] text-white">
+                                                <SiGithub size={11} />
+                                            </span>
+                                        </div>
+                                        <div className="min-w-0">
+                                            <h3 className="truncate text-sm font-semibold text-white">{user.name ?? user.login}</h3>
+                                            <p className="truncate font-code text-xs text-zinc-500">@{user.login}</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-5 grid grid-cols-3 gap-2 border-t border-white/[0.06] pt-5 text-center">
+                                        {[
+                                            { v: user.public_repos, l: "Repos", i: BookOpen },
+                                            { v: user.followers, l: "Followers", i: Users },
+                                            { v: user.following, l: "Following", i: Users },
+                                        ].map(({ v, l, i: I }) => (
+                                            <div key={l}>
+                                                <div className="text-lg font-bold text-white">{v}</div>
+                                                <div className="mt-0.5 flex items-center justify-center gap-1 font-code text-[10px] text-zinc-500">
+                                                    <I size={10} />
+                                                    {l}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </>
+                            ) : (
+                                <p className="text-sm text-zinc-500">Failed to load profile.</p>
+                            )}
+                        </aside>
+                    </Reveal>
 
                     {/* Repos */}
                     <div>
                         {error ? (
                             <div className="rounded-2xl border border-red-500/20 bg-red-500/[0.05] p-6 text-sm text-zinc-300">
-                                GitHub se data nahi aa paya (username galat ho sakta hai ya API limit ho gayi).{" "}
+                                Failed to fetch data from GitHub (the username may be incorrect or the API rate limit may have been reached).{" "}
                                 <button onClick={() => load(true)} className="font-semibold text-cyan-400 hover:underline">
                                     Retry
                                 </button>
@@ -221,53 +224,54 @@ export default function GitHubActivity() {
                                             className="h-[130px] animate-pulse rounded-2xl border border-white/[0.06] bg-white/[0.03]"
                                         />
                                     ))
-                                    : repos.map((r) => (
-                                        <a
-                                            key={r.id}
-                                            href={r.html_url}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            className="group relative flex min-h-[130px] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0d0d12] p-5 transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-500/40 hover:shadow-[0_16px_40px_-16px_rgba(59,130,246,0.45)]"
-                                        >
-                                            <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_0%,rgba(59,130,246,0.12),transparent_55%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                                    : repos.map((r, i) => (
+                                        <Reveal key={r.id} delay={(i % 2) * 120} className="h-full">
+                                            <a
+                                                href={r.html_url}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="group relative flex min-h-[130px] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0d0d12] p-5 transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-500/40 hover:shadow-[0_16px_40px_-16px_rgba(59,130,246,0.45)]"
+                                            >
+                                                <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_0%,rgba(59,130,246,0.12),transparent_55%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-                                            <div className="relative flex items-center justify-between gap-3">
-                                                <div className="flex min-w-0 items-center gap-2.5">
-                                                    <BookOpen size={15} className="shrink-0 text-blue-400" />
-                                                    <h4 className="truncate text-sm font-semibold text-blue-400 transition-colors group-hover:text-cyan-300 group-hover:underline">
-                                                        {r.name}
-                                                    </h4>
+                                                <div className="relative flex items-center justify-between gap-3">
+                                                    <div className="flex min-w-0 items-center gap-2.5">
+                                                        <BookOpen size={15} className="shrink-0 text-blue-400" />
+                                                        <h4 className="truncate text-sm font-semibold text-blue-400 transition-colors group-hover:text-cyan-300 group-hover:underline">
+                                                            {r.name}
+                                                        </h4>
+                                                    </div>
+                                                    <span className="shrink-0 rounded-full border border-white/[0.1] px-2.5 py-0.5 font-code text-[10px] text-zinc-400">
+                                                        {r.archived ? "Archived" : "Public"}
+                                                    </span>
                                                 </div>
-                                                <span className="shrink-0 rounded-full border border-white/[0.1] px-2.5 py-0.5 font-code text-[10px] text-zinc-400">
-                                                    {r.archived ? "Archived" : "Public"}
-                                                </span>
-                                            </div>
 
-                                            <p className="relative mt-3 line-clamp-2 text-xs text-zinc-400">
-                                                {r.description ?? "No description provided."}
-                                            </p>
+                                                <p className="relative mt-3 line-clamp-2 text-xs text-zinc-400">
+                                                    {r.description ?? "No description provided."}
+                                                </p>
 
-                                            <div className="relative mt-auto flex items-center justify-between gap-3 pt-5 text-xs text-zinc-500">
-                                                <div className="flex items-center gap-4">
-                                                    {r.language && (
-                                                        <span className="flex items-center gap-1.5">
-                                                            <span
-                                                                className="h-2.5 w-2.5 rounded-full"
-                                                                style={{ background: langColors[r.language] ?? "#8b949e" }}
-                                                            />
-                                                            {r.language}
-                                                        </span>
-                                                    )}
-                                                    {r.forks_count > 0 && (
-                                                        <span className="flex items-center gap-1">
-                                                            <GitFork size={12} />
-                                                            {r.forks_count}
-                                                        </span>
-                                                    )}
+                                                <div className="relative mt-auto flex items-center justify-between gap-3 pt-5 text-xs text-zinc-500">
+                                                    <div className="flex items-center gap-4">
+                                                        {r.language && (
+                                                            <span className="flex items-center gap-1.5">
+                                                                <span
+                                                                    className="h-2.5 w-2.5 rounded-full"
+                                                                    style={{ background: langColors[r.language] ?? "#8b949e" }}
+                                                                />
+                                                                {r.language}
+                                                            </span>
+                                                        )}
+                                                        {r.forks_count > 0 && (
+                                                            <span className="flex items-center gap-1">
+                                                                <GitFork size={12} />
+                                                                {r.forks_count}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                    <span className="shrink-0">Updated {timeAgo(r.pushed_at)}</span>
                                                 </div>
-                                                <span className="shrink-0">Updated {timeAgo(r.pushed_at)}</span>
-                                            </div>
-                                        </a>
+                                            </a>
+                                        </Reveal>
                                     ))}
                             </div>
                         )}

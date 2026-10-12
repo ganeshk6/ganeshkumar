@@ -7,6 +7,7 @@ import { SiGithub } from "react-icons/si";
 import ExpenceTracker from "../assets/expence-tracker.png";
 import AdminDashboard from "../assets/admin-dashboard.png";
 import hiddenscotland from "../assets/hiddenscotland.png";
+import Reveal from "./Reveal";
 
 type Project = {
     title: string;
@@ -126,38 +127,40 @@ export default function Projects() {
                 <style>{`@keyframes projectIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}`}</style>
 
                 {/* Heading */}
-                <div className="flex items-center gap-3 font-code text-xs">
-                    <span className="text-cyan-400">04</span>
-                    <span className="h-px w-8 bg-zinc-700" />
-                    <span className="uppercase tracking-[0.3em] text-zinc-500">Featured Work</span>
-                </div>
-                <div className="mt-3 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-                    <div>
-                        <h2 className="bg-gradient-to-r from-blue-600 via-sky-300 to-violet-600 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl">
-                            Featured Work
-                        </h2>
-                        <p className="mt-4 text-[15px] text-zinc-400">
-                            A selection of things I&apos;ve designed, built, and shipped.
-                        </p>
+                <Reveal>
+                    <div className="flex items-center gap-3 font-code text-xs">
+                        <span className="text-cyan-400">04</span>
+                        <span className="h-px w-8 bg-zinc-700" />
+                        <span className="uppercase tracking-[0.3em] text-zinc-500">Featured Work</span>
                     </div>
+                    <div className="mt-3 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+                        <div>
+                            <h2 className="bg-gradient-to-r from-blue-600 via-sky-300 to-violet-600 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl">
+                                Featured Work
+                            </h2>
+                            <p className="mt-4 text-[15px] text-zinc-400">
+                                A selection of things I&apos;ve designed, built, and shipped.
+                            </p>
+                        </div>
 
-                    {/* Filters */}
-                    <div className="flex flex-wrap gap-2">
-                        {filters.map((f) => (
-                            <button
-                                key={f}
-                                onClick={() => setActive(f)}
-                                className={`rounded-full border px-4 py-1.5 text-xs font-semibold transition-all duration-300 ${
-                                    active === f
-                                        ? "border-transparent bg-gradient-to-r from-blue-600 to-violet-600 text-white shadow-[0_0_20px_-4px_rgba(99,102,241,0.7)]"
-                                        : "border-white/[0.1] bg-white/[0.03] text-zinc-400 hover:border-blue-400/40 hover:text-white"
-                                }`}
-                            >
-                                {f}
-                            </button>
-                        ))}
+                        {/* Filters */}
+                        <div className="flex flex-wrap gap-2">
+                            {filters.map((f) => (
+                                <button
+                                    key={f}
+                                    onClick={() => setActive(f)}
+                                    className={`rounded-full border px-4 py-1.5 text-xs font-semibold transition-all duration-300 ${
+                                        active === f
+                                            ? "border-transparent bg-gradient-to-r from-blue-600 to-violet-600 text-white shadow-[0_0_20px_-4px_rgba(99,102,241,0.7)]"
+                                            : "border-white/[0.1] bg-white/[0.03] text-zinc-400 hover:border-blue-400/40 hover:text-white"
+                                    }`}
+                                >
+                                    {f}
+                                </button>
+                            ))}
+                        </div>
                     </div>
-                </div>
+                </Reveal>
 
                 {/* Grid */}
                 <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-6">
@@ -166,114 +169,120 @@ export default function Projects() {
                         const expanded = open === p.title;
                         const featured = i === 0 && list.length >= 4;
                         return (
-                            <article
+                            <Reveal
                                 key={p.title + active}
-                                style={{ animation: `projectIn .5s ease-out ${i * 80}ms both` }}
-                                className={`group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0d0d12] transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-blue-500/40 hover:shadow-[0_16px_40px_-16px_rgba(59,130,246,0.45)] ${spanClass(
-                                    i,
-                                    list.length
-                                )} ${list.length === 3 || list.length === 4 ? "" : ""}`}
+                                delay={(i % 2) * 120}
+                                className={`h-full ${spanClass(i, list.length)}`}
                             >
-                                {/* left hover border (top → bottom) */}
-                                <span className="absolute left-0 top-0 z-20 h-full w-[3px] origin-top scale-y-0 bg-gradient-to-b from-cyan-400 via-blue-500 to-violet-500 transition-transform duration-500 ease-out group-hover:scale-y-100" />
 
-                                {/* Preview */}
-                                <div
-                                    className={`relative h-44 overflow-hidden bg-gradient-to-br sm:h-52 ${p.gradient} ${
-                                        featured ? "lg:h-64" : ""
-                                    }`}
+                                <article
+                                    style={{ animation: `projectIn .5s ease-out ${i * 80}ms both` }}
+                                    className={`group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0d0d12] transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-blue-500/40 hover:shadow-[0_16px_40px_-16px_rgba(59,130,246,0.45)] ${spanClass(
+                                        i,
+                                        list.length
+                                    )} ${list.length === 3 || list.length === 4 ? "" : ""}`}
                                 >
-                                    {p.image ? (
-                                        // eslint-disable-next-line @next/next/no-img-element
-                                        <img
-                                            src={p.image}
-                                            alt={p.title}
-                                            className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                                        />
-                                    ) : (
-                                        <>
-                                            <span className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:28px_28px]" />
-                                            <div className="absolute inset-0 flex items-center justify-center">
-                                                <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-white backdrop-blur transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
-                                                    <Icon size={28} />
+                                    {/* left hover border (top → bottom) */}
+                                    <span className="absolute left-0 top-0 z-20 h-full w-[3px] origin-top scale-y-0 bg-gradient-to-b from-cyan-400 via-blue-500 to-violet-500 transition-transform duration-500 ease-out group-hover:scale-y-100" />
+
+                                    {/* Preview */}
+                                    <div
+                                        className={`relative h-44 overflow-hidden bg-gradient-to-br sm:h-52 ${p.gradient} ${
+                                            featured ? "lg:h-64" : ""
+                                        }`}
+                                    >
+                                        {p.image ? (
+                                            // eslint-disable-next-line @next/next/no-img-element
+                                            <img
+                                                src={p.image}
+                                                alt={p.title}
+                                                className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                                            />
+                                        ) : (
+                                            <>
+                                                <span className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:28px_28px]" />
+                                                <div className="absolute inset-0 flex items-center justify-center">
+                                                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-white backdrop-blur transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+                                                        <Icon size={28} />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </>
-                                    )}
-                                    <span className="absolute left-3 top-3 rounded-md border border-cyan-400/30 bg-black/50 px-2.5 py-1 font-code text-[10px] uppercase tracking-wider text-cyan-300 backdrop-blur">
-                                        {p.label}
-                                    </span>
-                                    {i === 0 && (
-                                        <span className="absolute right-3 top-3 rounded-md bg-cyan-400 px-2.5 py-1 font-code text-[10px] font-bold uppercase tracking-wider text-black">
-                                            Featured
+                                            </>
+                                        )}
+                                        <span className="absolute left-3 top-3 rounded-md border border-cyan-400/30 bg-black/50 px-2.5 py-1 font-code text-[10px] uppercase tracking-wider text-cyan-300 backdrop-blur">
+                                            {p.label}
                                         </span>
-                                    )}
-                                    <span className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#0d0d12] to-transparent" />
-                                </div>
-
-                                {/* Body */}
-                                <div className="flex flex-1 flex-col p-5 sm:p-6">
-                                    <h3
-                                        className={`font-semibold transition-colors duration-300 group-hover:text-cyan-300 ${
-                                            featured ? "text-xl text-cyan-300" : "text-base text-white"
-                                        }`}
-                                    >
-                                        {p.title}
-                                    </h3>
-
-                                    <p
-                                        className={`mt-3 text-sm leading-relaxed text-zinc-400 ${
-                                            expanded ? "" : "line-clamp-3"
-                                        }`}
-                                    >
-                                        {p.summary}
-                                    </p>
-
-                                    {expanded && (
-                                        <ul className="mt-4 space-y-2.5">
-                                            {p.points.map((pt) => (
-                                                <li key={pt} className="flex gap-3 text-[13px] leading-relaxed text-zinc-400">
-                                                    <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-blue-400" />
-                                                    <span>{pt}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
-
-                                    <button
-                                        onClick={() => setOpen(expanded ? null : p.title)}
-                                        className="mt-2 w-fit font-code text-xs font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
-                                    >
-                                        {expanded ? "Show less" : "Read more"}
-                                    </button>
-
-                                    <div className="mt-4 flex flex-wrap gap-2">
-                                        {p.tags.map((t) => (
-                                            <span
-                                                key={t}
-                                                className="rounded-md border border-white/[0.08] bg-white/[0.04] px-2.5 py-1 font-code text-[11px] text-zinc-300 transition-colors duration-300 group-hover:border-blue-400/25"
-                                            >
-                                                {t}
+                                        {i === 0 && (
+                                            <span className="absolute right-3 top-3 rounded-md bg-cyan-400 px-2.5 py-1 font-code text-[10px] font-bold uppercase tracking-wider text-black">
+                                                Featured
                                             </span>
-                                        ))}
+                                        )}
+                                        <span className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#0d0d12] to-transparent" />
                                     </div>
 
-                                    {(p.github || p.live) && (
-                                        <div className="mt-auto flex gap-2 pt-6">
-                                            {p.github && (
-                                                <a href={p.github} target="_blank" rel="noreferrer" aria-label="GitHub" className={iconBtn}>
-                                                    <SiGithub size={15} />
-                                                </a>
-                                            )}
-                                            {p.live && (
-                                                <a href={p.live} target="_blank" rel="noreferrer" aria-label="Live demo" className={iconBtn}>
-                                                    <ArrowUpRight size={16} />
-                                                </a>
-                                            )}
+                                    {/* Body */}
+                                    <div className="flex flex-1 flex-col p-5 sm:p-6">
+                                        <h3
+                                            className={`font-semibold transition-colors duration-300 group-hover:text-cyan-300 ${
+                                                featured ? "text-xl text-cyan-300" : "text-base text-white"
+                                            }`}
+                                        >
+                                            {p.title}
+                                        </h3>
+
+                                        <p
+                                            className={`mt-3 text-sm leading-relaxed text-zinc-400 ${
+                                                expanded ? "" : "line-clamp-3"
+                                            }`}
+                                        >
+                                            {p.summary}
+                                        </p>
+
+                                        {expanded && (
+                                            <ul className="mt-4 space-y-2.5">
+                                                {p.points.map((pt) => (
+                                                    <li key={pt} className="flex gap-3 text-[13px] leading-relaxed text-zinc-400">
+                                                        <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-blue-400" />
+                                                        <span>{pt}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
+
+                                        <button
+                                            onClick={() => setOpen(expanded ? null : p.title)}
+                                            className="mt-2 w-fit font-code text-xs font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
+                                        >
+                                            {expanded ? "Show less" : "Read more"}
+                                        </button>
+
+                                        <div className="mt-4 flex flex-wrap gap-2">
+                                            {p.tags.map((t) => (
+                                                <span
+                                                    key={t}
+                                                    className="rounded-md border border-white/[0.08] bg-white/[0.04] px-2.5 py-1 font-code text-[11px] text-zinc-300 transition-colors duration-300 group-hover:border-blue-400/25"
+                                                >
+                                                    {t}
+                                                </span>
+                                            ))}
                                         </div>
-                                    )}
-                                </div>
-                            </article>
+
+                                        {(p.github || p.live) && (
+                                            <div className="mt-auto flex gap-2 pt-6">
+                                                {p.github && (
+                                                    <a href={p.github} target="_blank" rel="noreferrer" aria-label="GitHub" className={iconBtn}>
+                                                        <SiGithub size={15} />
+                                                    </a>
+                                                )}
+                                                {p.live && (
+                                                    <a href={p.live} target="_blank" rel="noreferrer" aria-label="Live demo" className={iconBtn}>
+                                                        <ArrowUpRight size={16} />
+                                                    </a>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                </article>
+                            </Reveal>
                         );
                     })}
                 </div>

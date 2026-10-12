@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Building2, Calendar, MapPin } from "lucide-react";
+import Reveal from "./Reveal";
 
 const experiences = [
     {
@@ -114,14 +115,16 @@ export default function Experience() {
         <>
             <section id="experience" className="mx-auto w-full max-w-7xl pt-25 px-4 px-4 md:px-6 xl:px-0">
                 {/* Heading */}
-                <div className="flex items-center gap-3 font-code text-xs">
-                    <span className="text-cyan-400">02</span>
-                    <span className="h-px w-8 bg-zinc-700" />
-                    <span className="uppercase tracking-[0.3em] text-zinc-500">Career</span>
-                </div>
-                <h2 className="mt-3 bg-gradient-to-r from-cyan-400 via-sky-300 to-violet-400 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl">
-                    Where I&apos;ve worked
-                </h2>
+                <Reveal>
+                    <div className="flex items-center gap-3 font-code text-xs">
+                        <span className="text-cyan-400">02</span>
+                        <span className="h-px w-8 bg-zinc-700" />
+                        <span className="uppercase tracking-[0.3em] text-zinc-500">Career</span>
+                    </div>
+                    <h2 className="mt-3 bg-gradient-to-r from-cyan-400 via-sky-300 to-violet-400 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl">
+                        Where I&apos;ve worked
+                    </h2>
+                </Reveal>
 
                 <div ref={wrapRef} className="relative mt-16">
                     {/* Base line */}
@@ -157,7 +160,12 @@ export default function Experience() {
                                     </span>
 
                                     {/* Card */}
-                                    <div className={left ? "md:col-start-1 md:pr-12" : "md:col-start-2 md:pl-12"}>
+                                    <Reveal
+                                        direction={left ? "right" : "left"}
+                                        delay={80}
+                                        distance={48}
+                                        className={left ? "md:col-start-1 md:pr-12" : "md:col-start-2 md:pl-12"}
+                                    >
                                         <article className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[var(--color-bg-card,#0c0b10)] p-5 transition-colors duration-300 hover:border-white/[0.14] sm:p-6">
                                             {/* Hover left gradient border */}
                                             <span className="absolute left-0 top-0 h-full w-[3px] origin-top scale-y-0 bg-gradient-to-b from-cyan-400 via-blue-500 to-violet-500 transition-transform duration-500 ease-out group-hover:scale-y-100" />
@@ -206,7 +214,7 @@ export default function Experience() {
                                                 ))}
                                             </div>
                                         </article>
-                                    </div>
+                                    </Reveal>
                                 </div>
                             );
                         })}

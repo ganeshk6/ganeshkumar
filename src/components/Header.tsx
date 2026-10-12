@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { handleNavClick } from "../utils/scrollToSection";
+import { useEffect, useRef, useState } from "react";
+import { handleNavClick, getSectionTop } from "../utils/scrollToSection";
 import logo from "../assets/menu.svg";
 import close from "../assets/close.svg";
 
@@ -8,9 +8,9 @@ const navLinks = [
     { name: "Home", id: "home" },
     { name: "About", id: "about" },
     { name: "Experience", id: "experience" },
-    { name: "Skills", id: "tech-stack" },
-    { name: "Work", id: "projects" },
-    { name: "Profiles", id: "coding-profiles" },
+    { name: "Skills", id: "skills" },
+    { name: "Work", id: "work" },
+    { name: "Profiles", id: "profiles" },
     { name: "Contact", id: "contact" },
 ];
 
@@ -19,18 +19,33 @@ export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [activeId, setActiveId] = useState("home");
 
+    const lockUntil = useRef(0);
+
+    const goTo = (e: React.MouseEvent<HTMLElement>, id: string) => {
+        handleNavClick(e, id);
+        setActiveId(id);
+        lockUntil.current = Date.now() + 1400;
+    };
+
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 30);
+            if (Date.now() < lockUntil.current) return;
 
-            // jis section ka top header ke neeche tak pahunch gaya wahi active
-            let current = "home";
+            // screen ke ~35% pe ek "reading line", jis section ka top uske upar gaya wahi active
+            const line = window.scrollY + window.innerHeight * 0.35;
+            let current = navLinks[0].id;
+
             navLinks.forEach(({ id }) => {
-                const section = document.getElementById(id);
-                if (section && section.getBoundingClientRect().top <= 150) {
-                    current = id;
-                }
+                const top = getSectionTop(id);
+                if (top !== null && top <= line) current = id;
             });
+
+            // page ke bilkul neeche pahunche to last link active
+            const atBottom =
+                window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+            if (atBottom) current = navLinks[navLinks.length - 1].id;
+
             setActiveId(current);
         };
 
@@ -56,7 +71,7 @@ export default function Header() {
                 <a
                     href="#home"
                     onClick={(e) => {
-                        handleNavClick(e, "home");
+                        goTo(e, "home");
                         setMenuOpen(false);
                     }}
                     className="group flex shrink-0 items-center gap-3"
@@ -74,7 +89,7 @@ export default function Header() {
                         <li key={link.id}>
                             <a
                                 href={`#${link.id}`}
-                                onClick={(e) => handleNavClick(e, link.id)}
+                                onClick={(e) => goTo(e, link.id)}
                                 className={`relative block py-1 text-sm font-medium transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:rounded-full after:bg-gradient-to-r after:from-blue-400 after:to-violet-500 after:transition-all after:duration-300 ${
                                     activeId === link.id
                                         ? "text-blue-400 after:w-full"
@@ -124,7 +139,7 @@ export default function Header() {
                                 <a
                                     href={`#${link.id}`}
                                     onClick={(e) => {
-                                        handleNavClick(e, link.id);
+                                        goTo(e, link.id);
                                         setMenuOpen(false);
                                     }}
                                     className={`block rounded-xl px-4 py-3 text-sm transition-colors ${

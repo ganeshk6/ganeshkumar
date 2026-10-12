@@ -3,10 +3,22 @@
   --font-code: "JetBrains Mono", "JetBrains Mono Fallback", monospace;
   --font-heading: "Space Grotesk", "Space Grotesk Fallback", sans-serif
 }
-
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 100px;
+}
+
+/* Lenis ke liye recommended */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 body {
@@ -39,5 +51,32 @@ body {
 @keyframes border-spin {
   to {
     --angle: 360deg;
+  }
+}
+
+/* Chrome, Edge, Safari: patla gradient scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #2563eb, #7c3aed);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
+}
+
+/* Firefox: gradient support nahi karta, isliye ek solid blue thumb */
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: #3b82f6 #020617;
   }
 }
